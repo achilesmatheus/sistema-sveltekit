@@ -12,8 +12,7 @@
 	import Stack from '$lib/components/Stack.svelte';
 
 	let loading = false;
-	let username, password;
-	let error;
+
 	export let form;
 
 	const handleSubmit = () => {
