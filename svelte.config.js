@@ -4,10 +4,9 @@ import adapter from '@sveltejs/adapter-auto';
 const config = {
 	kit: {
 		adapter: adapter(),
-		vite: {
-			define: {
-				'process.env': process.env
-			}
+		env: {
+			dir: process.cwd(),
+			publicPrefix: 'PUBLIC_'
 		}
 	}
 };
