@@ -25,7 +25,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@lucia-sveltekit/adapter-supabase": "^0.10.1",
 		"@supabase/auth-helpers-sveltekit": "^0.8.2",
 		"@supabase/supabase-js": "^2.0.4"
 	}

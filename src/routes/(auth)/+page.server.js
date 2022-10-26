@@ -1,5 +1,4 @@
 import { getSupabase } from '@supabase/auth-helpers-sveltekit';
-// import { AuthApiError } from '@supabase/supabase-js';
 import { invalid, redirect } from '@sveltejs/kit';
 
 export const actions = {
@@ -28,10 +27,9 @@ export const actions = {
 		const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
 
 		if (error) {
-			console.log(error.message, error.status);
 			if (error.status === 400) {
 				return invalid(400, {
-					error: 'Email ou senha incorretos',
+					error: error.message,
 					values: {
 						email
 					}
@@ -45,6 +43,6 @@ export const actions = {
 			});
 		}
 
-		throw redirect(303, '/dashboard');
+		throw redirect(303, '/profile');
 	}
 };

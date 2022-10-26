@@ -31,6 +31,10 @@
 		width: 100%;
 	}
 
+	:global(.condensed) {
+		max-width: fit-content !important;
+	}
+
 	:global(.sidenav) {
 		background-color: #282828;
 	}

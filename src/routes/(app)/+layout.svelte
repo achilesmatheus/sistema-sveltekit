@@ -29,11 +29,7 @@
 	import SettingsAdjust from 'carbon-icons-svelte/lib/SettingsAdjust.svelte';
 	import UserAvatarFilledAlt from 'carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte';
 
-	import { page } from '$app/stores';
-
 	let isSideNavOpen = false;
-
-	function setAciveLink() {}
 </script>
 
 <Header persistentHamburgerMenu={true} company="GCM" platformName="Sete Lagoas" bind:isSideNavOpen>
@@ -90,7 +86,7 @@
 			<SideNavMenuItem href="/" text="Link 3" />
 		</SideNavMenu>
 		<SideNavLink href="/" text="Estatísticas" />
-		<SideNavLink href="/profile" text="Perfil" />
+		<SideNavLink href="/signup" text="Perfil" />
 	</SideNavItems>
 	<Form method="post" action="/logout">
 		<Button class="btn_logout" type="submit" kind="secondary" icon={Logout}>Sair</Button>
