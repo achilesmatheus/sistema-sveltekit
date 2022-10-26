@@ -77,7 +77,7 @@
 	</HeaderUtilities>
 </Header>
 
-<SideNav isOpen={true} class="sidenav">
+<SideNav class="sidenav" isOpen={true} fixed>
 	<SideNavItems>
 		<SideNavLink href="/dashboard" text="Página inicial" />
 		<SideNavMenu href="/" text="Ocorrências">
@@ -100,5 +100,22 @@
 <style>
 	:global(.bx--side-nav__icon > svg) {
 		fill: #e0e0e0;
+	}
+
+	:global(.bx--side-nav__navigation) {
+		background-color: #282828;
+	}
+
+	:global(.sidenav ul li a span, .sidenav ul li button span) {
+		color: #e0e0e0 !important;
+	}
+
+	:global(.sidenav ul li a, .sidenav ul li button) {
+		border-left: 4px solid transparent;
+	}
+
+	:global(.sidenav ul li a:hover, .sidenav ul li button:hover) {
+		background-color: #3d3d3d !important;
+		border-color: #0f62fe;
 	}
 </style>
