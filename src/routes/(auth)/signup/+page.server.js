@@ -1,5 +1,5 @@
 import { getSupabase } from '@supabase/auth-helpers-sveltekit';
-import { invalid, redirect } from '@sveltejs/kit';
+import { invalid } from '@sveltejs/kit';
 import { GCM_SUPER_ADMIN } from '../../../lib/constants';
 
 export const actions = {
@@ -14,6 +14,7 @@ export const actions = {
 		const phone = formData.get('telefone');
 		const full_name = formData.get('nome_completo');
 		const war_name = formData.get('nome_de_guerra');
+		const registration_number = formData.get('matricula');
 
 		if (!email) {
 			return invalid(400, {
@@ -40,6 +41,11 @@ export const actions = {
 				error: 'Digite sua senha'
 			});
 		}
+		if (!registration_number) {
+			return invalid(400, {
+				error: 'Digite sua matrícula'
+			});
+		}
 
 		const { error } = await supabaseClient.auth.signUp({
 			email,
@@ -49,6 +55,8 @@ export const actions = {
 					full_name,
 					war_name,
 					phone,
+					email,
+					registration_number,
 					role: GCM_SUPER_ADMIN
 				}
 			}

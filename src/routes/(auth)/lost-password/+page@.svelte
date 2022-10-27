@@ -1,24 +1,28 @@
 <script>
+	import {
+		Button,
+		InlineLoading,
+		InlineNotification,
+		PasswordInput,
+		TextInput
+	} from 'carbon-components-svelte';
+	import Stack from '$lib/components/Stack.svelte';
+	import Save from 'carbon-icons-svelte/lib/Save.svelte';
+	import AuthLayout from '../../../lib/layouts/AuthLayout.svelte';
 	import { enhance, applyAction } from '$app/forms';
 	import { invalidate } from '$app/navigation';
-	import {
-		TextInput,
-		Button,
-		PasswordInput,
-		InlineLoading,
-		InlineNotification
-	} from 'carbon-components-svelte';
 	import DirectionStraightRight from 'carbon-icons-svelte/lib/DirectionStraightRight.svelte';
-	import Stack from '$lib/components/Stack.svelte';
-	import AuthLayout from '../../lib/layouts/AuthLayout.svelte';
 
+	export let data;
+	export let form;
 	let loading = false;
 
-	export let form;
+	$: ({ user } = data);
 
 	const handleSubmit = () => {
 		loading = true;
 		return async ({ result }) => {
+			console.log(result);
 			if (result.type === 'redirect') {
 				await invalidate('supabase:auth');
 			} else {
@@ -39,30 +43,26 @@
 				hideCloseButton
 			/>
 		{/if}
-		<h2>Login</h2>
-		<span>Não tem acesso ao sistema?</span>
-		<a href="/signup">Clique aqui</a>
+
+		{#if form?.success}
+			<InlineNotification
+				kind="success"
+				title="Atenção!"
+				subtitle={form?.success}
+				hideCloseButton
+			/>
+		{/if}
+		<h2>Recuperação de senha</h2>
+		<p>Um link será enviado para seu email.</p>
 	</div>
 
 	<form slot="form" method="post" use:enhance={handleSubmit}>
 		<Stack>
 			<TextInput
 				name="email"
-				id="email"
-				value={form?.values?.email ?? ''}
-				labelText="Usuário"
-				placeholder="Usuário"
-				required
-			/>
-
-			<PasswordInput
-				name="password"
-				id="password"
-				labelText="Senha"
-				hidePasswordLabel="Esconder senha"
-				showPasswordLabel="Mostrar senha"
-				tooltipPosition="left"
-				placeholder="Senha"
+				type="email"
+				labelText="Digite seu email cadastrado para recuperar a senha"
+				placeholder="Email"
 			/>
 			{#if loading}
 				<InlineLoading status="active" description="Carregando..." />
@@ -73,10 +73,9 @@
 					size="small"
 					skeleton={loading}
 					disabled={loading}
-					icon={DirectionStraightRight}>Entrar</Button
+					icon={DirectionStraightRight}>Enviar</Button
 				>
 			{/if}
-			<a href="/lost-password">Perdeu a senha?</a>
 		</Stack>
 	</form>
 </AuthLayout>

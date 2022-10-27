@@ -1,5 +1,6 @@
 <script>
 	import 'carbon-components-svelte/css/g10.css';
+	import '../styles/global.css';
 
 	import { supabaseClient } from '$lib/supabase';
 	import { invalidate } from '$app/navigation';
@@ -8,7 +9,7 @@
 	onMount(() => {
 		const {
 			data: { subscription }
-		} = supabaseClient.auth.onAuthStateChange(() => {
+		} = supabaseClient.auth.onAuthStateChange((event) => {
 			invalidate('supabase:auth');
 		});
 

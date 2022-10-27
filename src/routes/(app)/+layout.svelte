@@ -26,6 +26,8 @@
 	import UserAvatarFilledAlt from 'carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte';
 
 	let isSideNavOpen = false;
+
+	export let data;
 </script>
 
 <Header persistentHamburgerMenu={true} company="GCM" platformName="Sete Lagoas" bind:isSideNavOpen>
@@ -75,14 +77,18 @@
 
 <SideNav class="sidenav" isOpen={true} fixed>
 	<SideNavItems>
-		<SideNavLink href="/dashboard" text="Página inicial" />
+		<SideNavLink
+			isSelected={data?.pathname === '/dashboard'}
+			href="/dashboard"
+			text="Página inicial"
+		/>
 		<SideNavMenu href="/" text="Ocorrências">
 			<SideNavMenuItem href="/" text="Link 1" />
 			<SideNavMenuItem href="/" text="Link 2" />
 			<SideNavMenuItem href="/" text="Link 3" />
 		</SideNavMenu>
-		<SideNavLink href="/" text="Estatísticas" />
-		<SideNavLink href="/signup" text="Perfil" />
+		<SideNavLink isSelected={data.pathname === '/'} href="/" text="Estatísticas" />
+		<SideNavLink isSelected={data.pathname === '/'} href="/signup" text="Perfil" />
 	</SideNavItems>
 	<Form method="post" action="/logout">
 		<Button class="btn_logout" type="submit" kind="secondary" icon={Logout}>Sair</Button>
@@ -92,26 +98,3 @@
 <Content>
 	<slot />
 </Content>
-
-<style>
-	:global(.bx--side-nav__icon > svg) {
-		fill: #e0e0e0;
-	}
-
-	:global(.bx--side-nav__navigation) {
-		background-color: #282828;
-	}
-
-	:global(.sidenav ul li a span, .sidenav ul li button span) {
-		color: #e0e0e0 !important;
-	}
-
-	:global(.sidenav ul li a, .sidenav ul li button) {
-		border-left: 4px solid transparent;
-	}
-
-	:global(.sidenav ul li a:hover, .sidenav ul li button:hover) {
-		background-color: #3d3d3d !important;
-		border-color: #0f62fe;
-	}
-</style>

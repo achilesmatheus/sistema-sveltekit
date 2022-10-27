@@ -3,6 +3,7 @@
 		Button,
 		InlineLoading,
 		InlineNotification,
+		Link,
 		PasswordInput,
 		TextInput
 	} from 'carbon-components-svelte';
@@ -18,14 +19,14 @@
 	let password, confirm_password;
 	let loading = false;
 
-	function comparePasswords(pass1, pass2) {
+	function isPasswordsEquals(pass1, pass2) {
 		return pass1 === pass2;
 	}
 
 	$: ({ user } = data);
 
 	const handleSubmit = ({ cancel }) => {
-		if (comparePasswords(password, confirm_password)) {
+		if (isPasswordsEquals(password, confirm_password)) {
 			loading = true;
 			return async ({ result }) => {
 				if (result.type === 'redirect') {
@@ -60,50 +61,42 @@
 				hideCloseButton
 			/>
 		{/if}
-		<h2>Cadastro de usuário</h2>
+		<h2>Crie uma nova senha</h2>
+		<p>A senha precisa ter no mínimo 6 dígitos.</p>
 	</div>
 
 	<form slot="form" method="post" use:enhance={handleSubmit}>
-		<Stack>
-			<TextInput name="nome_completo" labelText="Nome completo" placeholder="Nome" required />
-			<TextInput
-				name="nome_de_guerra"
-				labelText="Nome de Guerra"
-				placeholder="Nome de Guerra"
-				required
-			/>
-			<Stack horizontal>
-				<TextInput name="email" labelText="Email" placeholder="Email" required />
-				<TextInput name="telefone" labelText="Telefone" placeholder="Telefone" />
-			</Stack>
-			<Stack horizontal>
+		{#if form.success}
+			<Button href="/" icon={DirectionStraightRight}>Acesse o sistema</Button>
+		{:else}
+			<Stack>
 				<PasswordInput
-					bind:value={password}
 					name="senha"
-					labelText="Senha"
+					type="password"
+					labelText="Digite a senha nova"
 					placeholder="Senha"
-					required
+					bind:value={password}
 				/>
 				<PasswordInput
-					bind:value={confirm_password}
-					required
 					name="confirme_sua_senha"
+					type="password"
 					labelText="Confirme sua senha"
-					placeholder="Confirme sua senha"
+					placeholder="Senha"
+					bind:value={confirm_password}
 				/>
+				{#if loading}
+					<InlineLoading status="active" description="Carregando..." />
+				{:else}
+					<Button
+						class="condensed"
+						type="submit"
+						size="small"
+						skeleton={loading}
+						disabled={loading}
+						icon={DirectionStraightRight}>Enviar</Button
+					>
+				{/if}
 			</Stack>
-			{#if loading}
-				<InlineLoading status="active" description="Carregando..." />
-			{:else}
-				<Button
-					class="condensed"
-					type="submit"
-					size="small"
-					skeleton={loading}
-					disabled={loading}
-					icon={DirectionStraightRight}>Cadastrar</Button
-				>
-			{/if}
-		</Stack>
+		{/if}
 	</form>
 </AuthLayout>
