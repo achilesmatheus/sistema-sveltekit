@@ -63,6 +63,7 @@
 				type="email"
 				labelText="Digite seu email cadastrado para recuperar a senha"
 				placeholder="Email"
+				required
 			/>
 			{#if loading}
 				<InlineLoading status="active" description="Carregando..." />

@@ -29,14 +29,15 @@ export const actions = {
 		if (error) {
 			if (error.status === 400) {
 				return invalid(400, {
-					error: error.message,
+					error: 'Login ou senha incorretos',
 					values: {
 						email
 					}
 				});
 			}
+
 			return invalid(500, {
-				error: 'Erro no servidor. Tente novamente',
+				error: 'Erro no servidor. Tente novamente' + error.message,
 				values: {
 					email
 				}

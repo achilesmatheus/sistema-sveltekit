@@ -1,10 +1,11 @@
 <script>
-	import 'carbon-components-svelte/css/g10.css';
+	import 'carbon-components-svelte/css/all.css';
 	import '../styles/global.css';
 
 	import { supabaseClient } from '$lib/supabase';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { Theme } from 'carbon-components-svelte';
 
 	onMount(() => {
 		const {
@@ -19,7 +20,9 @@
 	});
 </script>
 
-<slot />
+<Theme theme="g10">
+	<slot />
+</Theme>
 
 <style>
 	:global(*, *::after, *::before) {

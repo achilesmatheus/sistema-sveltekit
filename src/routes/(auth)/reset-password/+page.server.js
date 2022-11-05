@@ -40,8 +40,6 @@ export const actions = {
 				values: error.message
 			});
 		}
-		// return { success: data };
-		console.log(data);
 		return { success: 'Senha atualizada' };
 	}
 };

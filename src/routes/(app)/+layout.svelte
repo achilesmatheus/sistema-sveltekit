@@ -20,78 +20,74 @@
 		HeaderGlobalAction,
 		HeaderUtilities
 	} from 'carbon-components-svelte';
+	import Dashboard from 'carbon-icons-svelte/lib/Dashboard.svelte';
+	import Document from 'carbon-icons-svelte/lib/Document.svelte';
+	import ChartBar from 'carbon-icons-svelte/lib/ChartBar.svelte';
+	import Person from 'carbon-icons-svelte/lib/Person.svelte';
 	import Logout from 'carbon-icons-svelte/lib/Logout.svelte';
 
 	import SettingsAdjust from 'carbon-icons-svelte/lib/SettingsAdjust.svelte';
 	import UserAvatarFilledAlt from 'carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte';
+	import Pin from 'carbon-icons-svelte/lib/Pin.svelte';
 
 	let isSideNavOpen = false;
+	let pinnedSideNav = false;
 
 	export let data;
 </script>
 
-<Header persistentHamburgerMenu={true} company="GCM" platformName="Sete Lagoas" bind:isSideNavOpen>
+<Header persistentHamburgerMenu={false} company="GCM" platformName="Sete Lagoas" bind:isSideNavOpen>
 	<svelte:fragment slot="skip-to-content">
 		<SkipToContent />
 	</svelte:fragment>
-	<HeaderNav>
-		<HeaderNavItem href="/" text="Link 1" />
-		<HeaderNavItem href="/" text="Link 2" />
-		<HeaderNavItem href="/" text="Link 3" />
-		<HeaderNavMenu text="Menu">
-			<HeaderNavItem href="/" text="Link 1" />
-			<HeaderNavItem href="/" text="Link 2" />
-			<HeaderNavItem href="/" text="Link 3" />
-		</HeaderNavMenu>
-	</HeaderNav>
 	<HeaderUtilities>
 		<HeaderGlobalAction aria-label="Settings" icon={SettingsAdjust} />
 		<HeaderAction icon={UserAvatarFilledAlt} closeIcon={UserAvatarFilledAlt}>
 			<HeaderPanelLinks>
-				<HeaderPanelDivider>Switcher subject 1</HeaderPanelDivider>
-				<HeaderPanelLink>Switcher item 1</HeaderPanelLink>
-				<HeaderPanelLink>Switcher item 2</HeaderPanelLink>
-				<HeaderPanelLink>Switcher item 3</HeaderPanelLink>
-				<HeaderPanelLink>Switcher item 4</HeaderPanelLink>
-				<HeaderPanelDivider>Switcher subject 2</HeaderPanelDivider>
-				<HeaderPanelLink>Switcher item 1</HeaderPanelLink>
-				<HeaderPanelLink>Switcher item 2</HeaderPanelLink>
-				<HeaderPanelDivider>Switcher subject 3</HeaderPanelDivider>
-				<HeaderPanelLink>Switcher item 1</HeaderPanelLink>
-			</HeaderPanelLinks>
-		</HeaderAction>
-		<HeaderAction>
-			<HeaderPanelLinks>
-				<HeaderPanelDivider>Switcher subject 1</HeaderPanelDivider>
-				<HeaderPanelLink>Switcher item 1</HeaderPanelLink>
-				<HeaderPanelDivider>Switcher subject 2</HeaderPanelDivider>
-				<HeaderPanelLink>Switcher item 1</HeaderPanelLink>
-				<HeaderPanelLink>Switcher item 2</HeaderPanelLink>
-				<HeaderPanelLink>Switcher item 3</HeaderPanelLink>
-				<HeaderPanelLink>Switcher item 4</HeaderPanelLink>
-				<HeaderPanelLink>Switcher item 5</HeaderPanelLink>
+				<HeaderPanelDivider
+					>{data.session.user.user_metadata.war_name} -
+					{data.session.user.user_metadata.registration_number}</HeaderPanelDivider
+				>
+				<HeaderPanelLink href="/profile">Acessar perfil</HeaderPanelLink>
+				<form action="" method="post">
+					<Button icon={Logout} kind="secondary">Sair do sistema</Button>
+				</form>
 			</HeaderPanelLinks>
 		</HeaderAction>
 	</HeaderUtilities>
 </Header>
 
-<SideNav class="sidenav" isOpen={true} fixed>
+<SideNav class="sidenav" isOpen={isSideNavOpen} rail={pinnedSideNav || !isSideNavOpen}>
 	<SideNavItems>
+		{#if isSideNavOpen}
+			<SideNavLink
+				text="Fixar menu lateral"
+				icon={Pin}
+				on:click={() => (pinnedSideNav = !pinnedSideNav)}
+			/>
+		{/if}
 		<SideNavLink
 			isSelected={data?.pathname === '/dashboard'}
 			href="/dashboard"
 			text="Página inicial"
+			icon={Dashboard}
 		/>
-		<SideNavMenu href="/" text="Ocorrências">
-			<SideNavMenuItem href="/" text="Link 1" />
-			<SideNavMenuItem href="/" text="Link 2" />
-			<SideNavMenuItem href="/" text="Link 3" />
-		</SideNavMenu>
-		<SideNavLink isSelected={data.pathname === '/'} href="/" text="Estatísticas" />
-		<SideNavLink isSelected={data.pathname === '/'} href="/signup" text="Perfil" />
+		<SideNavLink
+			isSelected={data?.pathname === '/ocorrencias'}
+			href="/ocorrencias"
+			text="Ocorrências"
+			icon={Document}
+		/>
+		<SideNavLink isSelected={data.pathname === '/'} href="/" text="Estatísticas" icon={ChartBar} />
+		<SideNavLink
+			isSelected={data.pathname === '/perfil'}
+			href="/perfil"
+			text="Perfil"
+			icon={Person}
+		/>
 	</SideNavItems>
 	<Form method="post" action="/logout">
-		<Button class="btn_logout" type="submit" kind="secondary" icon={Logout}>Sair</Button>
+		<Button type="submit" icon={Logout}>Sair</Button>
 	</Form>
 </SideNav>
 

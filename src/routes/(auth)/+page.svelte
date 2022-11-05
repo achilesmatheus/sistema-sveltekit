@@ -49,6 +49,7 @@
 			<TextInput
 				name="email"
 				id="email"
+				type="email"
 				value={form?.values?.email ?? ''}
 				labelText="Usuário"
 				placeholder="Usuário"
@@ -63,6 +64,7 @@
 				showPasswordLabel="Mostrar senha"
 				tooltipPosition="left"
 				placeholder="Senha"
+				required
 			/>
 			{#if loading}
 				<InlineLoading status="active" description="Carregando..." />

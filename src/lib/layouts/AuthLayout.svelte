@@ -80,9 +80,9 @@
 		justify-content: center;
 		gap: 2rem;
 	}
-	.right a {
+	/* .right a {
 		text-decoration: none;
-	}
+	} */
 
 	a:hover {
 		text-decoration: underline;
