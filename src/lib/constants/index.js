@@ -1,8 +1,18 @@
-const GCM_SUPER_ADMIN = 'super_admin';
-const GCM_CMD = 'comandante';
-const GCM_SUB = 'sub_comandante';
-const GCM_COORDENADOR = 'coordenador';
-const GCM_SUPERVISOR = 'supervisor';
-const GCM = 'gcm';
+// Contantes de Hierarquia
+const hierarquia = {
+	GCM_SUPER_ADMIN: 'super_admin',
+	GCM_CMD: 'comandante',
+	GCM_SUB: 'sub_comandante',
+	GCM_COORDENADOR: 'coordenador',
+	GCM_SUPERVISOR: 'supervisor',
+	GCM: 'gcm'
+};
 
-export { GCM, GCM_SUPERVISOR, GCM_COORDENADOR, GCM_SUB, GCM_CMD, GCM_SUPER_ADMIN };
+// Contantes de Status
+const status = {
+	EM_ABERTO: 'em aberto',
+	FINALIZADO: 'finalizado',
+	PENDENTE: 'pendente'
+};
+
+export { hierarquia, status };

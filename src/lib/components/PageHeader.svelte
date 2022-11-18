@@ -7,7 +7,7 @@
 
 <style>
 	header {
-		padding-bottom: 1rem;
+		/* padding-bottom: 1rem; */
 	}
 
 	.content_header {

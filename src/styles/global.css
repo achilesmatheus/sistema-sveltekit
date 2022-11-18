@@ -1,11 +1,16 @@
 :root {
 	--g100: #161616;
 	--g10: #f4f4f4;
+	--white: #fff;
 }
 
 /* Global */
 .bx--link {
 	color: #f4f4f4 !important;
+}
+
+.bx--col {
+	/* border: 1px solid; */
 }
 
 /* Header */
@@ -15,11 +20,15 @@
 
 /* Sidenav */
 .bx--side-nav__icon > svg {
-	/* fill: #e0e0e0; */
+	fill: #e0e0e0;
 }
 
 .bx--side-nav__navigation {
-	background-color: var(--g10);
+	background-color: var(--g100);
+}
+
+.bx--side-nav__navigation {
+	/* border-right: 1px solid #16161646; */
 }
 
 a.bx--side-nav__link[aria-current='page']::before,
@@ -29,7 +38,7 @@ a.bx--side-nav__link--current::before {
 
 a.bx--side-nav__link > .bx--side-nav__link-text,
 .bx--side-nav__submenu {
-	/* color: #fff; */
+	color: #fff;
 	font-weight: normal;
 }
 
@@ -44,7 +53,7 @@ a.bx--side-nav__link--current {
 
 a.bx--side-nav__link[aria-current='page'] .bx--side-nav__link-text,
 a.bx--side-nav__link--current .bx--side-nav__link-text {
-	/* color: #fff; */
+	color: #fff;
 }
 
 .bx--side-nav__submenu:focus {
@@ -72,7 +81,7 @@ a.bx--side-nav__link--current {
 
 /* Content */
 .bx--content {
-	padding: 1rem 2rem 1rem 0;
+	padding: 0;
 }
 
 /* TabPanel */

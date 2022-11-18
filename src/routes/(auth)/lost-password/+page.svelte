@@ -22,7 +22,6 @@
 	const handleSubmit = () => {
 		loading = true;
 		return async ({ result }) => {
-			console.log(result);
 			if (result.type === 'redirect') {
 				await invalidate('supabase:auth');
 			} else {

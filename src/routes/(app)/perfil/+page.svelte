@@ -18,55 +18,51 @@
 	export let data;
 	export let form;
 	let loading = false;
+	let loading2 = false;
 	const [user] = data?.profileTable;
-
-	const handleSubmit = () => {
-		loading = true;
-		return async ({ result }) => {
-			if (result.type === 'redirect') {
-				await invalidate('supabase:auth');
-			} else {
-				await applyAction(result);
-			}
-			loading = false;
-		};
-	};
 </script>
 
-{#if form?.Ok}
-	<h4>{form.Ok}</h4>
-{/if}
-
-<Grid>
-	<Row>
+<Grid narrow>
+	<Row padding>
 		<Column>
 			<PageHeader>
 				<h4 slot="h3_title">Perfil</h4>
 			</PageHeader>
 		</Column>
 	</Row>
+
 	<Row>
 		<Column>
 			<Tile>
 				<h4>Editar Perfil</h4>
-				{#if form?.error}
+				{#if form?.editProfile?.error}
 					<InlineNotification
-						kind={form?.error === 'Email not confirmed' ? 'warning' : 'error'}
+						kind="error"
 						title="Erro:"
-						subtitle={form?.error}
+						subtitle={form?.editProfile?.error}
 						hideCloseButton
 					/>
 				{/if}
 
-				{#if form?.success}
+				{#if form?.editProfile?.success}
 					<InlineNotification
 						kind="success"
-						title="Atenção!"
-						subtitle={form?.success}
+						title="Ok!"
+						subtitle={form?.editProfile?.success}
 						hideCloseButton
 					/>
 				{/if}
-				<form method="post" use:enhance={handleSubmit}>
+				<form
+					method="post"
+					action="?/editProfile"
+					use:enhance={() => {
+						loading = true;
+						return async ({ result }) => {
+							await applyAction(result);
+							loading = false;
+						};
+					}}
+				>
 					<Stack>
 						<TextInput
 							labelText="Nome completo"
@@ -98,7 +94,7 @@
 								name="phone"
 							/>
 						</Stack>
-						<TextInput labelText="Email" placeholder="Email" value={user.email} name="email" />
+
 						{#if loading}
 							<InlineLoading status="active" description="Carregando..." />
 						{:else}
@@ -115,7 +111,62 @@
 				</form>
 			</Tile>
 		</Column>
-		<Column />
+
+		<Column>
+			<Tile>
+				<h4>Editar Email</h4>
+				{#if form?.editEmail?.error}
+					<InlineNotification
+						kind="error"
+						title="Erro:"
+						subtitle={form?.editEmail.error}
+						hideCloseButton
+					/>
+				{/if}
+
+				{#if form?.editEmail?.success}
+					<InlineNotification
+						kind="success"
+						title="Atenção!"
+						subtitle={form?.editEmail?.success}
+						hideCloseButton
+					/>
+				{/if}
+				<form
+					method="post"
+					action="?/editEmail"
+					use:enhance={() => {
+						loading2 = true;
+						return async ({ result }) => {
+							await applyAction(result);
+							loading2 = false;
+						};
+					}}
+				>
+					<Stack>
+						<TextInput
+							labelText="Email"
+							placeholder="Email"
+							value={user.email}
+							name="email"
+							light
+						/>
+						{#if loading2}
+							<InlineLoading status="active" description="Carregando..." />
+						{:else}
+							<Button
+								class="condensed"
+								type="submit"
+								size="small"
+								skeleton={loading2}
+								disabled={loading2}
+								icon={Save}>Salvar</Button
+							>
+						{/if}
+					</Stack>
+				</form>
+			</Tile>
+		</Column>
 	</Row>
 </Grid>
 

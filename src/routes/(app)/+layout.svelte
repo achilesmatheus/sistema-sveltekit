@@ -34,6 +34,7 @@
 	let pinnedSideNav = false;
 
 	export let data;
+	$: [user] = data.profileTable;
 </script>
 
 <Header persistentHamburgerMenu={false} company="GCM" platformName="Sete Lagoas" bind:isSideNavOpen>
@@ -41,15 +42,15 @@
 		<SkipToContent />
 	</svelte:fragment>
 	<HeaderUtilities>
-		<HeaderGlobalAction aria-label="Settings" icon={SettingsAdjust} />
-		<HeaderAction icon={UserAvatarFilledAlt} closeIcon={UserAvatarFilledAlt}>
+		<HeaderAction
+			text={`GCM ${user.war_name}`}
+			icon={UserAvatarFilledAlt}
+			closeIcon={UserAvatarFilledAlt}
+		>
 			<HeaderPanelLinks>
-				<HeaderPanelDivider
-					>{data.session.user.user_metadata.war_name} -
-					{data.session.user.user_metadata.registration_number}</HeaderPanelDivider
-				>
-				<HeaderPanelLink href="/profile">Acessar perfil</HeaderPanelLink>
-				<form action="" method="post">
+				<HeaderPanelDivider>{user.war_name} - {user.registration_number}</HeaderPanelDivider>
+				<HeaderPanelLink href="/perfil">Acessar perfil</HeaderPanelLink>
+				<form method="post">
 					<Button icon={Logout} kind="secondary">Sair do sistema</Button>
 				</form>
 			</HeaderPanelLinks>
