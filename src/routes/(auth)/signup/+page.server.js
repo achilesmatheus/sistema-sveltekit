@@ -1,6 +1,6 @@
 import { getSupabase } from '@supabase/auth-helpers-sveltekit';
 import { invalid } from '@sveltejs/kit';
-import { GCM_SUPER_ADMIN } from '../../../lib/constants';
+import { GCM_SUPER_ADMIN, hierarquia } from '../../../lib/constants';
 
 export const actions = {
 	async default(event) {
@@ -57,7 +57,7 @@ export const actions = {
 					phone,
 					email,
 					registration_number,
-					role: GCM_SUPER_ADMIN
+					role: hierarquia.GCM_SUPER_ADMIN
 				}
 			}
 		});
