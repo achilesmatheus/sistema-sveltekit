@@ -13,6 +13,10 @@
 	/* border: 1px solid; */
 }
 
+.btn-full {
+	max-width: none !important;
+}
+
 /* Header */
 /* .bx--header {
 	border: none;

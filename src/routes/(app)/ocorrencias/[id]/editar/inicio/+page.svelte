@@ -10,11 +10,16 @@
 		Tile
 	} from 'carbon-components-svelte';
 	import Stack from '$lib/components/Stack.svelte';
-	import OcorrenciasHeader from '../../../../../lib/components/OcorrenciasHeader.svelte';
+	import OcorrenciasHeader from '$lib/components/OcorrenciasHeader.svelte';
 	import Save from 'carbon-icons-svelte/lib/Save.svelte';
+
+	export let data;
+
+	$: ({ id } = data.params);
 </script>
 
 <Tile>
+	<span>Número do Registro: <strong>{id}</strong> </span>
 	<Tabs type="">
 		<Tab label="Atendimento" />
 		<Tab label="Local" />

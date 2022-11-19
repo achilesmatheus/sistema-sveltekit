@@ -1,10 +1,13 @@
 import { getSupabase } from '@supabase/auth-helpers-sveltekit';
 
 export async function GET(event) {
-	const { supabaseClient } = await getSupabase(event);
+	const { supabaseClient, session } = await getSupabase(event);
 
 	try {
-		const { error, data } = await supabaseClient.from('ocorrencias').select();
+		const { error, data } = await supabaseClient
+			.from('ocorrencias')
+			.select()
+			.eq('user_id', session.user.id);
 
 		if (error) throw new Error('Não foi possível buscar a lista de ocorrências');
 

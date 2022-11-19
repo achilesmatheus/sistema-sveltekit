@@ -1,5 +1,5 @@
 import { getSupabase } from '@supabase/auth-helpers-sveltekit';
-import { status } from '../../../../lib/constants';
+import { status } from '$lib/constants';
 
 // export async function GET(event) {
 // 	const { supabaseClient } = await getSupabase(event);
@@ -31,12 +31,17 @@ import { status } from '../../../../lib/constants';
 // 	});
 // }
 
-export function POST(event) {
-	return new Response(JSON.stringify({ data: new Date().toISOString() }));
+export async function POST(event) {
+	const { supabaseClient, session } = await getSupabase(event);
+	if (!session) return new Response(JSON.stringify({ Error: 'Não autorizado' }), { status: 401 });
+
+	return new Response(JSON.stringify({ data: event }));
 }
 
 export async function GET(event) {
-	const { supabaseClient } = await getSupabase(event);
+	const { supabaseClient, session } = await getSupabase(event);
+
+	if (!session) return new Response(JSON.stringify({ Error: 'Não autorizado' }), { status: 401 });
 
 	const currentDate = new Date();
 
@@ -58,20 +63,22 @@ export async function GET(event) {
 	}
 
 	// Gera um novo número de RO com base na quantidade de registros no dia atual
-	async function generateRONumber() {
-		const { error, data } = await supabaseClient
-			.rpc('ocorrencias_por_dia', { datadaocorrencia: currentDate })
-			.select();
+	function generateRONumber() {
+		// Cria um número baseado na quantidade de registros do dia
 
-		if (error) {
-			throw new Error('Não foi possível gerar um novo número de RO');
-		}
+		// const { error, data } = await supabaseClient
+		// 	.rpc('ocorrencias_por_dia', { datadaocorrencia: currentDate })
+		// 	.select();
+
+		// if (error) {
+		// 	throw new Error('Não foi possível gerar um novo número de RO');
+		// }
 
 		const { formatedDay, formatedMonth, formatedYear } = getDate();
-		const numberOfROs = data;
-		const nextRONumber = numberOfROs + 1;
+		// const numberOfROs = data;
+		// const nextRONumber = numberOfROs + 1;
 
-		const roNumber = String(nextRONumber).padStart(4, '0');
+		const roNumber = String(currentDate.getUTCMilliseconds()).padStart(3, '0');
 		const RO = `RO${formatedYear}-${formatedMonth}${formatedDay}-${roNumber}`;
 
 		return RO;
@@ -79,10 +86,11 @@ export async function GET(event) {
 
 	// Gera um novo Registro de Ocorrência com o número gerado - RO
 	try {
-		const newRO = await generateRONumber();
+		const newRO = generateRONumber();
 		const { error } = await supabaseClient.from('ocorrencias').insert({
 			ro: newRO,
-			status: status.EM_ABERTO
+			status: status.EM_ABERTO,
+			user_id: session.user.id
 		});
 
 		if (error) {
